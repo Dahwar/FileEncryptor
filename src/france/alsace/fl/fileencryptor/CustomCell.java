@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package france.alsace.fl.fileencryptor;
 
 import java.io.File;
@@ -20,7 +15,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 
 /**
- *
+ * Custom cell for the list of file (with a label and a image button)
  * @author Florent
  */
 public class CustomCell extends ListCell<File> {
@@ -31,6 +26,10 @@ public class CustomCell extends ListCell<File> {
     private static final String BUTTON_STANDBY_STYLE = "-fx-background-color: transparent; -fx-padding: 1,4,1,0;";
     private static final String BUTTON_ON_MOUSE_ENTERED_STYLE = "-fx-background-color: transparent; -fx-padding: 1,4,1,0; -fx-opacity: 0.3;";
     
+    /**
+     * Constructor
+     * @param img the image of the red cross to delete the cell
+     */
     public CustomCell(Image img) {
         this.img = img;
         button.setOnAction(new EventHandler<ActionEvent>() {    
@@ -54,7 +53,13 @@ public class CustomCell extends ListCell<File> {
                 button.setStyle(BUTTON_STANDBY_STYLE);
             }
         });
-    }  
+    }
+    
+    /**
+     * Override function which is called when a celle is painted
+     * @param item the file item
+     * @param empty 
+     */
     @Override    
     public void updateItem(final File item, boolean empty) {    
         super.updateItem(item, empty);    

@@ -1,12 +1,5 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package france.alsace.fl.fileencryptor;
 
-import java.io.BufferedInputStream;
-import java.io.DataInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -16,7 +9,6 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.URL;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
@@ -303,11 +295,20 @@ public class FXMLFileEncryptorController implements Initializable {
         deleteSelection();
     }
     
+    /**
+     * To delete the selection in the list
+     */
     private void deleteSelection() {
         ObservableList<File> tmp = this.listViewFiles.getSelectionModel().getSelectedItems();
         obsListFiles.removeAll(tmp);
     }
     
+    /**
+     * To generate a String which isn't in the list
+     * @param size size of the String
+     * @param names already generate String
+     * @return the generate String
+     */
     private String generateName(int size, List<String> names) {
         StringBuilder sb = new StringBuilder();
         

@@ -1,18 +1,18 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package france.alsace.fl.fileencryptor;
 
 import java.util.StringTokenizer;
 
 /**
- *
+ * Tools for files
  * @author Florent
  */
 public class FileUtils {
 
+    /**
+     * To get the file extension
+     * @param fileName the name of the file
+     * @return the extension of the file
+     */
     public static final String getExtention(String fileName) {
         StringTokenizer st = new StringTokenizer(fileName, ".");
         String s = null;

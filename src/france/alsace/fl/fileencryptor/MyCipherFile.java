@@ -1,14 +1,9 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package france.alsace.fl.fileencryptor;
 
 import java.io.Serializable;
 
 /**
- *
+ * The cipher file to serialize : contains all the data of the ciphered file
  * @author Florent
  */
 public class MyCipherFile implements Serializable {
@@ -20,6 +15,13 @@ public class MyCipherFile implements Serializable {
     private final byte[] salt;
     private final byte[] iv;
     
+    /**
+     * Constructor
+     * @param data the ciphered data
+     * @param name the name of the file
+     * @param salt the salt
+     * @param iv the initialization vector
+     */
     public MyCipherFile(byte[] data, String name, byte[] salt, byte[] iv) {
         this.data = data;
         this.name = name;
@@ -27,18 +29,34 @@ public class MyCipherFile implements Serializable {
         this.iv = iv;
     }
     
+    /**
+     * Get the salt
+     * @return the salt
+     */
     public byte[] getSalt() {
         return salt;
     }
     
+    /**
+     * Get the file name
+     * @return the file name
+     */
     public String getName() {
         return name;
     }
     
+    /**
+     * get the initialization vector
+     * @return the IV
+     */
     public byte[] getIv() {
         return iv;
     }
     
+    /**
+     * Get the data file
+     * @return the data file
+     */
     public byte[] getData() {
         return data;
     }

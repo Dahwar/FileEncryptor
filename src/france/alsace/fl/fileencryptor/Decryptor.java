@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package france.alsace.fl.fileencryptor;
 
 import java.security.InvalidAlgorithmParameterException;
@@ -22,7 +17,7 @@ import javax.crypto.spec.PBEKeySpec;
 import javax.crypto.spec.SecretKeySpec;
 
 /**
- *
+ * Decryptor class to decipher file
  * @author Florent
  */
 public class Decryptor {
@@ -30,11 +25,22 @@ public class Decryptor {
     private final int passwordIterations;
     private final int keySize;
     
+    /**
+     * Constructor
+     * @param passwordIterations number of iterations
+     * @param keySize size of the key
+     */
     public Decryptor(int passwordIterations, int keySize) {
         this.passwordIterations = passwordIterations;
         this.keySize = keySize;
     }
     
+    /**
+     * To decipher the file
+     * @param myCipherFile the cipher file
+     * @param password the password
+     * @return the deciphered file
+     */
     public MyFile decipher(MyCipherFile myCipherFile, String password) {
         try {
             // derive the key

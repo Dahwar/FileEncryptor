@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package france.alsace.fl.fileencryptor;
 
 import java.security.AlgorithmParameters;
@@ -24,7 +19,7 @@ import javax.crypto.spec.PBEKeySpec;
 import javax.crypto.spec.SecretKeySpec;
 
 /**
- *
+ * Encryptor class to cipher file
  * @author Florent
  */
 public class Encryptor {
@@ -32,11 +27,22 @@ public class Encryptor {
     private final int passwordIterations;
     private final int keySize;
     
+    /**
+     * Constructor
+     * @param passwordIterations number of iterations
+     * @param keySize size of the key 
+     */
     public Encryptor(int passwordIterations, int keySize) {
         this.passwordIterations = passwordIterations;
         this.keySize = keySize;
     }
     
+    /**
+     * To cipher the file
+     * @param myFile the file
+     * @param password the password
+     * @return the ciphered file
+     */
     public MyCipherFile cipher(MyFile myFile, String password) {
         try {
             //generate salt
@@ -76,6 +82,10 @@ public class Encryptor {
         return null;
     }
     
+    /**
+     * To generate the salt
+     * @return the salt
+     */
     private byte[] generateSalt() {
         SecureRandom random = new SecureRandom();
         byte bytes[] = new byte[20];
