@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.geometry.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="600.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="france.alsace.fl.fileencryptor.FXMLFileEncryptorController">
+   <children>
+      <BorderPane prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <center>
+            <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+               <children>
+                  <HBox alignment="CENTER" prefHeight="35.0" prefWidth="400.0">
+                     <children>
+                        <Label text="Mode : ">
+                           <padding>
+                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                           </padding>
+                        </Label>
+                        <RadioButton fx:id="radioButtonCipher" mnemonicParsing="false" onAction="#changeModeCipher" selected="true" text="Chiffrer">
+                           <padding>
+                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                           </padding>
+                           <toggleGroup>
+                              <ToggleGroup fx:id="radioButtonModeGroup" />
+                           </toggleGroup>
+                        </RadioButton>
+                        <RadioButton fx:id="radioButtonDecipher" mnemonicParsing="false" onAction="#changeModeDecipher" text="Déchiffrer" toggleGroup="$radioButtonModeGroup">
+                           <padding>
+                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                           </padding>
+                        </RadioButton>
+                     </children>
+                     <VBox.margin>
+                        <Insets bottom="5.0" top="5.0" />
+                     </VBox.margin>
+                  </HBox>
+                  <BorderPane prefHeight="35.0" prefWidth="400.0">
+                     <right>
+                        <AnchorPane prefHeight="34.0" prefWidth="95.0" BorderPane.alignment="CENTER">
+                           <children>
+                              <Button fx:id="buttonClearListview" mnemonicParsing="false" onAction="#clearListView" text="Vider la liste" AnchorPane.bottomAnchor="2.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="2.0" />
+                           </children>
+                        </AnchorPane>
+                     </right>
+                     <left>
+                        <AnchorPane prefHeight="34.0" prefWidth="218.0" BorderPane.alignment="CENTER">
+                           <children>
+                              <Button fx:id="buttonChooseFiles" mnemonicParsing="false" onAction="#chooseFiles" text="Sélectionner les fichiers à chiffrer" AnchorPane.bottomAnchor="2.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="2.0" />
+                           </children>
+                        </AnchorPane>
+                     </left>
+                     <center>
+                        <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                           <children>
+                              <Button fx:id="buttonDeleteSelection" mnemonicParsing="false" onAction="#deleteSelection" text="Supprimer" AnchorPane.bottomAnchor="2.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="2.0" />
+                           </children>
+                        </AnchorPane>
+                     </center>
+                     <VBox.margin>
+                        <Insets />
+                     </VBox.margin>
+                  </BorderPane>
+                  <ListView fx:id="listViewFiles" onKeyPressed="#deleteSelectionOnSupprPressed" prefHeight="418.0" prefWidth="390.0" VBox.vgrow="ALWAYS">
+                     <VBox.margin>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </VBox.margin>
+                  </ListView>
+                  <HBox alignment="CENTER_LEFT" prefHeight="35.0" prefWidth="400.0">
+                     <children>
+                        <Label text="Dossier de destination : ">
+                           <HBox.margin>
+                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                           </HBox.margin>
+                        </Label>
+                        <TextField fx:id="textFieldChooseDestinationFolder" onMouseClicked="#chooseDestinationFolder" prefHeight="25.0" prefWidth="252.0" HBox.hgrow="ALWAYS">
+                           <HBox.margin>
+                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                           </HBox.margin>
+                        </TextField>
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER_LEFT" prefHeight="35.0" prefWidth="400.0">
+                     <children>
+                        <Label fx:id="labelDestinationFolder" text="Mot de passe : ">
+                           <HBox.margin>
+                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                           </HBox.margin>
+                        </Label>
+                        <PasswordField fx:id="textfieldPassword" prefHeight="25.0" prefWidth="158.0" HBox.hgrow="ALWAYS">
+                           <HBox.margin>
+                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                           </HBox.margin>
+                        </PasswordField>
+                        <Button fx:id="buttonCipherOrDecipher" mnemonicParsing="false" onAction="#cipherOrDecipher" prefHeight="25.0" prefWidth="106.0" text="Chiffrer">
+                           <HBox.margin>
+                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                           </HBox.margin>
+                        </Button>
+                        <ProgressIndicator fx:id="progress" prefHeight="30.0" prefWidth="19.0">
+                           <HBox.margin>
+                              <Insets right="5.0" />
+                           </HBox.margin>
+                        </ProgressIndicator>
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
+         </center>
+         <bottom>
+            <BorderPane prefHeight="35.0" prefWidth="400.0" BorderPane.alignment="CENTER">
+               <top>
+                  <Label fx:id="labelInfo" textFill="#009400" BorderPane.alignment="CENTER" />
+               </top>
+               <bottom>
+                  <Label fx:id="labelError" textFill="RED" BorderPane.alignment="CENTER" />
+               </bottom>
+               <BorderPane.margin>
+                  <Insets bottom="5.0" top="5.0" />
+               </BorderPane.margin>
+               <center>
+                  <Label fx:id="labelCalcul" textFill="BLUE" BorderPane.alignment="CENTER" />
+               </center>
+            </BorderPane>
+         </bottom>
+      </BorderPane>
+   </children>
+</AnchorPane>
