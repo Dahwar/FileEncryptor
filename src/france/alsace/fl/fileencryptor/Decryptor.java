@@ -69,8 +69,7 @@ public class Decryptor {
                 | IllegalBlockSizeException 
                 | BadPaddingException ex) {
             Logger.getLogger(Decryptor.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
         }
-        
-        return null;
     }
 }

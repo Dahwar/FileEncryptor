@@ -34,9 +34,17 @@ public class Counter {
     
     /**
      * Return the counter value (property)
-     * @return 
+     * @return the counter value (property)
      */
-    public IntegerProperty getValue() {
+    public IntegerProperty getCounter() {
         return cnt;
+    }
+    
+    /**
+     * Return the counter value (int)
+     * @return the counter value (int)
+     */
+    public int getValue() {
+        return cnt.get();
     }
 }

@@ -99,6 +99,9 @@ public class FXMLFileEncryptorController implements Initializable {
     private static final String ERROR_MISSING_PASSWORD = "Veuillez entrer le mot de passe";
     private static final String ERROR_NOT_DECIPHERING_FILES = "Certains fichiers ne sont pas des fichiers à déchiffrer";
     private static final String ERROR_EMPTY_LIST = "Veuillez sélectionner au moins un fichier";
+    private static final String ERROR_DURING_CIPHERING_OR_DECIPHERING = "Des erreurs sont survenues durant le traitement";
+    private static final String FILE_OK = " fichier(s) traité(s)";
+    private static final String ERROR = " erreur(s) avérée(s)";
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -145,7 +148,9 @@ public class FXMLFileEncryptorController implements Initializable {
 
     @FXML
     private void cipherOrDecipher(ActionEvent event) {
+        this.labelError.textProperty().set("");
         this.labelError.setText("");
+        
         if(this.obsListFiles.size() == 0) {
             this.labelError.setText(ERROR_EMPTY_LIST);
         } else if(this.textFieldChooseDestinationFolder.getText().equals("")) {
@@ -154,8 +159,13 @@ public class FXMLFileEncryptorController implements Initializable {
             this.labelError.setText(ERROR_MISSING_PASSWORD);
         } else {
             
-            Counter cnt = new Counter();
-            labelCalcul.textProperty().bind(cnt.getValue().asString().concat(" fichier(s) traité(s)"));
+            Counter cntSucess = new Counter();
+            Counter cntError = new Counter();
+            labelCalcul.textProperty().bind(cntSucess.getCounter().asString()
+                    .concat(FILE_OK)
+                    .concat("/")
+                    .concat(cntError.getCounter().asString())
+                    .concat(ERROR));
 
             ExecutorService threadExecutor = Executors.newFixedThreadPool(THREAD_POOL);
 
@@ -176,19 +186,28 @@ public class FXMLFileEncryptorController implements Initializable {
                                 //cipher MyFile to MyCipherFile
                                 MyCipherFile mcf = encryptor.cipher(new MyFile(data, f.getName()), textfieldPassword.getText());
 
-                                //generate a file name and put it in the list of already-generate names file
-                                String name = generateName(NAME_SIZE, names);
-                                names.add(name);
+                                if(mcf!=null) {
+                                    //generate a file name and put it in the list of already-generate names file
+                                    String name = generateName(NAME_SIZE, names);
+                                    names.add(name);
 
-                                //serialize MyCipherFile
-                                FileOutputStream fos = new FileOutputStream(textFieldChooseDestinationFolder.getText() + "\\" + name + "." + MyCipherFile.CIPHER_FILE_EXTENSION);
-                                ObjectOutputStream oos = new ObjectOutputStream(fos);
-                                oos.writeObject(mcf);
-                                oos.close();
+                                    //serialize MyCipherFile
+                                    FileOutputStream fos = new FileOutputStream(textFieldChooseDestinationFolder.getText() + "\\" + name + "." + MyCipherFile.CIPHER_FILE_EXTENSION);
+                                    ObjectOutputStream oos = new ObjectOutputStream(fos);
+                                    oos.writeObject(mcf);
+                                    oos.close();
+                                }
 
                                 Platform.runLater(new Runnable() {
                                     public void run() {
-                                        cnt.increment();
+                                        if(mcf!=null) {
+                                            cntSucess.increment();
+                                        } else {
+                                            cntError.increment();
+                                            if(cntError.getValue()==1) {
+                                                labelError.setText(ERROR_DURING_CIPHERING_OR_DECIPHERING);
+                                            }
+                                        }
                                     }
                                 });
 
@@ -217,16 +236,25 @@ public class FXMLFileEncryptorController implements Initializable {
 
                                     //decipher MyCipherFile to MyFile
                                     MyFile mf = decryptor.decipher(mcf, textfieldPassword.getText());
-
+                                    
                                     //write the deciphered file with his right name and extension
-                                    File outputFile = new File(textFieldChooseDestinationFolder.getText() + "\\" + mf.getName());
-                                    FileOutputStream fos = new FileOutputStream(outputFile);
-                                    fos.write(mf.getData());
-                                    fos.close();
-
+                                    if(mf!=null) {
+                                        File outputFile = new File(textFieldChooseDestinationFolder.getText() + "\\" + mf.getName());
+                                        FileOutputStream fos = new FileOutputStream(outputFile);
+                                        fos.write(mf.getData());
+                                        fos.close();
+                                    }
+                                    
                                     Platform.runLater(new Runnable() {
                                         public void run() {
-                                            cnt.increment();
+                                            if(mf!=null) {
+                                                cntSucess.increment();
+                                            } else {
+                                                cntError.increment();
+                                                if(cntError.getValue()==1) {
+                                                    labelError.setText(ERROR_DURING_CIPHERING_OR_DECIPHERING);
+                                                }
+                                            }
                                         }
                                     });
                                     

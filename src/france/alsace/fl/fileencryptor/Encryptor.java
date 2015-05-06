@@ -77,9 +77,8 @@ public class Encryptor {
                 | IllegalBlockSizeException 
                 | BadPaddingException ex) {
             Logger.getLogger(Encryptor.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
         }
-        
-        return null;
     }
     
     /**
