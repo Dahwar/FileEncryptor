@@ -20,7 +20,7 @@ public class FileEncryptor extends Application {
         Scene scene = new Scene(root);
         Image icon = new Image("/img/icon.png");
         stage.getIcons().add(icon);
-        stage.setTitle("FX File Encryptor v1.1.0");
+        stage.setTitle("FX File Encryptor v1.1.1");
         
         stage.setScene(scene);
         stage.show();

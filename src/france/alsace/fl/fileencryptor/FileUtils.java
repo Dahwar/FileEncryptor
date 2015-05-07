@@ -22,4 +22,8 @@ public class FileUtils {
         }
         return s.toLowerCase();
     }
+    
+    public static final String getNameWithoutExtension(String fileName) {
+        return fileName.substring(0,fileName.lastIndexOf('.'));
+    }
 }

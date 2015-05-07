@@ -175,7 +175,12 @@ public class FXMLFileEncryptorController implements Initializable {
             if(this.radioButtonCipher.isSelected()) {
                 Encryptor encryptor = new Encryptor(PASSWORD_ITERATIONS, KEY_SIZE);
                 List<String> names = new ArrayList<>();
-                
+                //get the name file already used
+                for(File f : new File(textFieldChooseDestinationFolder.getText()).listFiles()) {
+                    if(FileUtils.getExtention(f.getName()).equals(MyCipherFile.CIPHER_FILE_EXTENSION)) {
+                        names.add(FileUtils.getNameWithoutExtension(f.getName()));
+                    }
+                }
                 for(File f : this.obsListFiles) {
                     Thread t = new Thread() {
                         public void run() {
@@ -189,7 +194,10 @@ public class FXMLFileEncryptorController implements Initializable {
                                 if(mcf!=null) {
                                     //generate a file name and put it in the list of already-generate names file
                                     String name = generateName(NAME_SIZE, names);
-                                    names.add(name);
+                                    
+                                    synchronized(names) {
+                                        names.add(name);
+                                    }
 
                                     //serialize MyCipherFile
                                     FileOutputStream fos = new FileOutputStream(textFieldChooseDestinationFolder.getText() + "\\" + name + "." + MyCipherFile.CIPHER_FILE_EXTENSION);
@@ -279,7 +287,7 @@ public class FXMLFileEncryptorController implements Initializable {
                 public void run() {
                     while(!threadExecutor.isTerminated()) {
                     }
-
+                    
                     Platform.runLater(new Runnable() {
                         public void run() {
                             progress.setVisible(false);
